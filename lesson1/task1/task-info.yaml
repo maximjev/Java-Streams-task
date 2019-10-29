@@ -1,0 +1,163 @@
+type: edu
+files:
+- name: src/Task.java
+  visible: true
+  text: "import java.util.List;\n\nclass Task {\n\n\tstatic Offer getShortestOffer(Results\
+    \ results) {\n\t\tthrow new IllegalStateException(\"Not implemented\");\n\t}\n\
+    \n\tstatic List<Segment> getListOfDistinctSegments(Results results) {\n\t\tthrow\
+    \ new IllegalStateException(\"Not implemented\");\n\t}\n\n\tstatic List< List<Sector>\
+    \ > getDistinctSectorsGroupedByIndex(Results results) {\n\t\tthrow new IllegalStateException(\"\
+    Not implemented\");\n\t}\n\n}"
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: "import org.junit.Test;\n\nimport java.util.List;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\
+    \npublic class Tests {\n\n\t@Test\n\tpublic void testGetShortestOffer() {\n\t\t\
+    Offer shortestOffer = Task.getShortestOffer(ResultsService.getRoundTripResults());\n\
+    \t\tassertThat(shortestOffer).isEqualTo(ResultsService.OFFER_KLM.get());\n\t}\n\
+    \n\t@Test\n\tpublic void testGetShortestOfferOneWay() {\n\t\tOffer shortestOffer\
+    \ = Task.getShortestOffer(ResultsService.getOneWayResults());\n\t\tassertThat(shortestOffer).isEqualTo(ResultsService.OFFER_OW_KLM.get());\n\
+    \t}\n\n\t@Test\n\tpublic void testGetShortestOfferEmptyResults() {\n\t\tOffer\
+    \ shortestOffer = Task.getShortestOffer(ResultsService.getEmptyResults());\n\t\
+    \tassertThat(shortestOffer).isNull();\n\t}\n\n\t@Test\n\tpublic void testGetListOfDistinctSegments()\
+    \ {\n\t\tList<Segment> distinctSegments = Task.getListOfDistinctSegments(ResultsService.getRoundTripResults());\n\
+    \t\tassertThat(distinctSegments).hasSize(10);\n\t\tassertThat(distinctSegments).doesNotHaveDuplicates();\n\
+    \t\tassertThat(distinctSegments).containsExactlyInAnyOrderElementsOf(ResultsService.getAllSegments());\n\
+    \t}\n\n\t@Test\n\tpublic void testGetListOfDistinctSegmentsOneWay() {\n\t\tList<Segment>\
+    \ distinctSegments = Task.getListOfDistinctSegments(ResultsService.getOneWayResults());\n\
+    \t\tassertThat(distinctSegments).hasSize(5);\n\t\tassertThat(distinctSegments).doesNotHaveDuplicates();\n\
+    \t\tassertThat(distinctSegments).containsExactlyInAnyOrderElementsOf(ResultsService.getOutBoundSegments());\n\
+    \t}\n\n\t@Test\n\tpublic void testGetListOfDistinctSegmentsEmptyResults() {\n\t\
+    \tList<Segment> distinctSegments = Task.getListOfDistinctSegments(ResultsService.getEmptyResults());\n\
+    \t\tassertThat(distinctSegments).hasSize(0);\n\t}\n\n\t@Test\n\tpublic void testGetDistinctSectorsGroupedByIndex()\
+    \ {\n\t\tList<List<Sector>> sectorsGroupedByIndex = Task.getDistinctSectorsGroupedByIndex(ResultsService.getRoundTripResults());\n\
+    \t\tassertThat(sectorsGroupedByIndex).hasSize(2);\n\t\tsectorsGroupedByIndex.forEach(sectorsPerIndex\
+    \ -> {\n\t\t\tassertThat(sectorsPerIndex).hasSize(3);\n\t\t});\n\t\tassertThat(sectorsGroupedByIndex.get(0)).containsExactlyInAnyOrderElementsOf(ResultsService.getOutboundSectors());\n\
+    \t\tassertThat(sectorsGroupedByIndex.get(1)).containsExactlyInAnyOrderElementsOf(ResultsService.getInboundSectors());\n\
+    \t}\n\n\t@Test\n\tpublic void testGetDistinctSectorsGroupedByIndexOneWay() {\n\
+    \t\tList<List<Sector>> sectorsGroupedByIndex = Task.getDistinctSectorsGroupedByIndex(ResultsService.getOneWayResults());\n\
+    \t\tassertThat(sectorsGroupedByIndex).hasSize(1);\n\t\tassertThat(sectorsGroupedByIndex.get(0)).hasSize(3);\n\
+    \t\tassertThat(sectorsGroupedByIndex.get(0)).containsExactlyInAnyOrderElementsOf(ResultsService.getOutboundSectors());\n\
+    \t}\n\n\t@Test\n\tpublic void testGetDistinctSectorsGroupedByIndexEmptyResults()\
+    \ {\n\t\tList<List<Sector>> sectorsGroupedByIndex = Task.getDistinctSectorsGroupedByIndex(ResultsService.getEmptyResults());\n\
+    \t\tassertThat(sectorsGroupedByIndex).hasSize(0);\n\t}\n}"
+  learner_created: false
+- name: src/Offer.java
+  visible: true
+  text: "import java.math.BigDecimal;\nimport java.util.List;\n\nclass Offer {\n\n\
+    \tprivate final String id;\n\n\tprivate final BigDecimal price;\n\n\tprivate final\
+    \ List<Sector> sectors;\n\n\tOffer(String id, BigDecimal price, List<Sector> sectors)\
+    \ {\n\t\tthis.id = id;\n\t\tthis.price = price;\n\t\tthis.sectors = sectors;\n\
+    \t}\n}\n"
+  learner_created: false
+- name: src/Segment.java
+  visible: true
+  text: "import java.time.Duration;\nimport java.time.LocalDateTime;\n\nclass Segment\
+    \ {\n\n\tprivate final String flightNumber;\n\n\tprivate final String origin;\n\
+    \n\tprivate final String destination;\n\n\tprivate final LocalDateTime departureTime;\n\
+    \n\tprivate final LocalDateTime arrivalTime;\n\n\tprivate final Duration flightDuration;\n\
+    \n\n\tSegment(\n\t\t\tString flightNumber,\n\t\t\tString origin,\n\t\t\tString\
+    \ destination,\n\t\t\tLocalDateTime departureTime,\n\t\t\tLocalDateTime arrivalTime,\n\
+    \t\t\tDuration flightDuration\n\t) {\n\t\tthis.flightNumber = flightNumber;\n\t\
+    \tthis.origin = origin;\n\t\tthis.destination = destination;\n\t\tthis.departureTime\
+    \ = departureTime;\n\t\tthis.arrivalTime = arrivalTime;\n\t\tthis.flightDuration\
+    \ = flightDuration;\n\t}\n}\n"
+  learner_created: false
+- name: src/Sector.java
+  visible: true
+  text: "import java.time.Duration;\nimport java.util.List;\n\nclass Sector {\n\n\t\
+    private final Duration duration;\n\n\tprivate final List<Segment> segments;\n\n\
+    \tSector(Duration duration, List<Segment> segments) {\n\t\tthis.duration = duration;\n\
+    \t\tthis.segments = segments;\n\t}\n}\n"
+  learner_created: false
+- name: src/Results.java
+  visible: true
+  text: "import java.util.List;\n\nclass Results {\n\n\tprivate final List<Offer>\
+    \ offers;\n\n\tResults(List<Offer> offers) {\n\t\tthis.offers = offers;\n\t}\n\
+    \n\tList<Offer> getOffers() {\n\t\treturn offers;\n\t}\n}\n"
+  learner_created: false
+- name: test/ResultsService.java
+  visible: false
+  text: "import java.math.BigDecimal;\nimport java.time.Duration;\nimport java.time.LocalDateTime;\n\
+    import java.util.List;\nimport java.util.function.Supplier;\n\nimport static java.time.temporal.ChronoUnit.HOURS;\n\
+    \nclass ResultsService {\n\n\tstatic final Supplier<Segment> SEG_AMS_LHR_KLM =\
+    \ () -> new Segment(\n\t\t\t\"KLM-1\",\n\t\t\t\"AMS\",\n\t\t\t\"LHR\",\n\t\t\t\
+    LocalDateTime.of(2020, 8, 15, 8, 0, 0),\n\t\t\tLocalDateTime.of(2020, 8, 15, 9,\
+    \ 0, 0),\n\t\t\tDuration.of(2, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_LHR_AMS_KLM = () -> new Segment(\n\t\t\t\"KLM-1\",\n\t\t\t\"LHR\",\n\t\t\
+    \t\"AMS\",\n\t\t\tLocalDateTime.of(2020, 8, 20, 17, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 20, 20, 0, 0),\n\t\t\tDuration.of(2, HOURS)\n\t);\n\n\n\tstatic final Supplier<Segment>\
+    \ SEG_AMS_CDG_AF = () -> new Segment(\n\t\t\t\"AF-1\",\n\t\t\t\"AMS\",\n\t\t\t\
+    \"CDG\",\n\t\t\tLocalDateTime.of(2020, 8, 15, 7, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 15, 8, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_CDG_LHR_AF = () -> new Segment(\n\t\t\t\"AF-2\",\n\t\t\t\"CDG\",\n\t\t\t\
+    \"LHR\",\n\t\t\tLocalDateTime.of(2020, 8, 15, 9, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 15, 9, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_LHR_CDG_AF = () -> new Segment(\n\t\t\t\"AF-3\",\n\t\t\t\"LHR\",\n\t\t\t\
+    \"CDG\",\n\t\t\tLocalDateTime.of(2020, 8, 20, 18, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 20, 20, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_CDG_AMS_AF = () -> new Segment(\n\t\t\t\"AF-4\",\n\t\t\t\"CDG\",\n\t\t\t\
+    \"AMS\",\n\t\t\tLocalDateTime.of(2020, 8, 20, 21, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 20, 22, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_AMS_FRA_LH = () -> new Segment(\n\t\t\t\"LH-1\",\n\t\t\t\"AMS\",\n\t\t\t\
+    \"FRA\",\n\t\t\tLocalDateTime.of(2020, 8, 15, 8, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 15, 9, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_FRA_LHR_LH = () -> new Segment(\n\t\t\t\"LH-2\",\n\t\t\t\"FRA\",\n\t\t\t\
+    \"LHR\",\n\t\t\tLocalDateTime.of(2020, 8, 15, 10, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 15, 10, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_LHR_FRA_LH = () -> new Segment(\n\t\t\t\"LH-3\",\n\t\t\t\"LHR\",\n\t\t\t\
+    \"FRA\",\n\t\t\tLocalDateTime.of(2020, 8, 20, 18, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 20, 20, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Segment>\
+    \ SEG_FRA_AMS_LH = () -> new Segment(\n\t\t\t\"LH-4\",\n\t\t\t\"FRA\",\n\t\t\t\
+    \"LHR\",\n\t\t\tLocalDateTime.of(2020, 8, 20, 21, 0, 0),\n\t\t\tLocalDateTime.of(2020,\
+    \ 8, 20, 22, 0, 0),\n\t\t\tDuration.of(1, HOURS)\n\t);\n\n\tstatic final Supplier<Sector>\
+    \ SEC_OUT_KLM = () -> new Sector(Duration.of(2, HOURS), List.of(SEG_AMS_LHR_KLM.get()));\n\
+    \n\tstatic final Supplier<Sector> SEC_IN_KLM = () -> new Sector(Duration.of(2,\
+    \ HOURS), List.of(SEG_LHR_AMS_KLM.get()));\n\n\tstatic final Supplier<Sector>\
+    \ SEC_OUT_AF = () -> new Sector(Duration.of(3, HOURS), List.of(SEG_AMS_CDG_AF.get(),\
+    \ SEG_CDG_LHR_AF.get()));\n\n\tstatic final Supplier<Sector> SEC_IN_AF = () ->\
+    \ new Sector(Duration.of(3, HOURS), List.of(SEG_LHR_CDG_AF.get(), SEG_CDG_AMS_AF.get()));\n\
+    \n\tstatic final Supplier<Sector> SEC_OUT_LH = () -> new Sector(Duration.of(3,\
+    \ HOURS), List.of(SEG_AMS_FRA_LH.get(), SEG_FRA_LHR_LH.get()));\n\n\tstatic final\
+    \ Supplier<Sector> SEC_IN_LH = () -> new Sector(Duration.of(3, HOURS), List.of(SEG_LHR_FRA_LH.get(),\
+    \ SEG_FRA_AMS_LH.get()));\n\n\n\tstatic final Supplier<Offer> OFFER_KLM = () ->\
+    \ new Offer(\n\t\t\t\"KLM\",\n\t\t\tBigDecimal.valueOf(200L),\n\t\t\tList.of(SEC_OUT_KLM.get(),\
+    \ SEC_IN_KLM.get())\n\t);\n\n\tstatic final Supplier<Offer> OFFER_AF = () -> new\
+    \ Offer(\n\t\t\t\"KLM-AF\",\n\t\t\tBigDecimal.valueOf(120L),\n\t\t\tList.of(SEC_OUT_AF.get(),\
+    \ SEC_IN_AF.get())\n\t);\n\n\tstatic final Supplier<Offer> OFFER_KLM_AF = () ->\
+    \ new Offer(\n\t\t\t\"KLM-AF\",\n\t\t\tBigDecimal.valueOf(150L),\n\t\t\tList.of(SEC_OUT_KLM.get(),\
+    \ SEC_IN_AF.get())\n\t);\n\n\tstatic final Supplier<Offer> OFFER_AF_KLM = () ->\
+    \ new Offer(\n\t\t\t\"KLM-AF\",\n\t\t\tBigDecimal.valueOf(155L),\n\t\t\tList.of(SEC_OUT_AF.get(),\
+    \ SEC_IN_KLM.get())\n\t);\n\n\tstatic final Supplier<Offer> OFFER_LH = () -> new\
+    \ Offer(\n\t\t\t\"LH\",\n\t\t\tBigDecimal.valueOf(119L),\n\t\t\tList.of(SEC_OUT_LH.get(),\
+    \ SEC_IN_LH.get())\n\t);\n\n\tstatic final Supplier<Offer> OFFER_OW_KLM = () ->\
+    \ new Offer(\n\t\t\t\"KLM\",\n\t\t\tBigDecimal.valueOf(100L),\n\t\t\tList.of(SEC_OUT_KLM.get())\n\
+    \t);\n\n\tstatic final Supplier<Offer> OFFER_OW_AF = () -> new Offer(\n\t\t\t\"\
+    KLM-AF\",\n\t\t\tBigDecimal.valueOf(60L),\n\t\t\tList.of(SEC_OUT_AF.get())\n\t\
+    );\n\n\tstatic final Supplier<Offer> OFFER_OW_KLM_AF = () -> new Offer(\n\t\t\t\
+    \"KLM-AF\",\n\t\t\tBigDecimal.valueOf(75L),\n\t\t\tList.of(SEC_OUT_KLM.get())\n\
+    \t);\n\n\tstatic final Supplier<Offer> OFFER_OW_AF_KLM = () -> new Offer(\n\t\t\
+    \t\"KLM-AF\",\n\t\t\tBigDecimal.valueOf(78L),\n\t\t\tList.of(SEC_OUT_AF.get())\n\
+    \t);\n\n\tstatic final Supplier<Offer> OFFER_OW_LH = () -> new Offer(\n\t\t\t\"\
+    LH\",\n\t\t\tBigDecimal.valueOf(59L),\n\t\t\tList.of(SEC_OUT_LH.get())\n\t);\n\
+    \n\n\tstatic Results getRoundTripResults() {\n\t\treturn new Results(List.of(\n\
+    \t\t\t\tOFFER_KLM.get(),\n\t\t\t\tOFFER_AF.get(),\n\t\t\t\tOFFER_KLM_AF.get(),\n\
+    \t\t\t\tOFFER_AF_KLM.get(),\n\t\t\t\tOFFER_LH.get()\n\t\t));\n\t}\n\n\tstatic\
+    \ Results getOneWayResults() {\n\t\treturn new Results(List.of(\n\t\t\t\tOFFER_OW_KLM.get(),\n\
+    \t\t\t\tOFFER_OW_AF.get(),\n\t\t\t\tOFFER_OW_KLM_AF.get(),\n\t\t\t\tOFFER_OW_AF_KLM.get(),\n\
+    \t\t\t\tOFFER_OW_LH.get()\n\t\t));\n\t}\n\n\tstatic Results getEmptyResults()\
+    \ {\n\t\treturn new Results(List.of());\n\t}\n\n\tstatic List<Segment> getAllSegments()\
+    \ {\n\t\treturn List.of(\n\t\t\t\tSEG_AMS_LHR_KLM.get(),\n\t\t\t\tSEG_LHR_AMS_KLM.get(),\n\
+    \t\t\t\tSEG_AMS_CDG_AF.get(),\n\t\t\t\tSEG_CDG_LHR_AF.get(),\n\t\t\t\tSEG_LHR_CDG_AF.get(),\n\
+    \t\t\t\tSEG_CDG_AMS_AF.get(),\n\t\t\t\tSEG_FRA_LHR_LH.get(),\n\t\t\t\tSEG_FRA_AMS_LH.get(),\n\
+    \t\t\t\tSEG_AMS_FRA_LH.get(),\n\t\t\t\tSEG_LHR_FRA_LH.get()\n\t\t);\n\t}\n\n\t\
+    static List<Segment> getOutBoundSegments() {\n\t\treturn List.of(\n\t\t\t\tSEG_AMS_LHR_KLM.get(),\n\
+    \t\t\t\tSEG_AMS_CDG_AF.get(),\n\t\t\t\tSEG_CDG_LHR_AF.get(),\n\t\t\t\tSEG_FRA_LHR_LH.get(),\n\
+    \t\t\t\tSEG_AMS_FRA_LH.get()\n\t\t);\n\t}\n\n\n\tstatic List<Sector> getOutboundSectors()\
+    \ {\n\t\treturn List.of(\n\t\t\t\tSEC_OUT_AF.get(),\n\t\t\t\tSEC_OUT_KLM.get(),\n\
+    \t\t\t\tSEC_OUT_LH.get()\n\t\t);\n\t}\n\n\tstatic List<Sector> getInboundSectors()\
+    \ {\n\t\treturn List.of(\n\t\t\t\tSEC_IN_AF.get(),\n\t\t\t\tSEC_IN_KLM.get(),\n\
+    \t\t\t\tSEC_IN_LH.get()\n\t\t);\n\t}\n}\n"
+  learner_created: false
+status: Solved
+record: -1
